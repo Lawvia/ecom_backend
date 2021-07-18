@@ -5,7 +5,7 @@ import (
 	"ecom_backend/app/modules"
 )
 
-//ModelItemsData is a class of model ms_games
+
 type ModelItemsData struct{}
 
 //Select get data

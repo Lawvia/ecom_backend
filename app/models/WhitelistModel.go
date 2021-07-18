@@ -5,7 +5,7 @@ import (
 	"ecom_backend/app/modules"
 )
 
-//ModelWhitelistData is a class of model ms_games
+
 type ModelWhitelistData struct{}
 
 //Select get data

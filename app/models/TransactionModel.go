@@ -5,7 +5,7 @@ import (
 	"ecom_backend/app/modules"
 )
 
-//ModelHeaderData is a class of model ms_games
+
 type ModelHeaderData struct{}
 
 //Select get data

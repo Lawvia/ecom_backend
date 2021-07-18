@@ -1,5 +1,5 @@
 {
-    "REDIS_HOST": "lasagna.fira.id",
+    "REDIS_HOST": "localhost",
     "REDIS_PORT": 6379,
     "REDIS_PASS": ""
 }
