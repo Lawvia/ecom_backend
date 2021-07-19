@@ -63,7 +63,7 @@ func Login(c *gin.Context){
 			c.JSON(200, gin.H{
 				"error": 1,
 				"status": "Error",
-				"message": err,
+				"message": "User not registered",
 			})
 			return
 		}

@@ -1,57 +1,44 @@
 package controllers
 
 import (
-	"strings"
+	"fmt"
 
+	"ecom_backend/app/dto"
 	"ecom_backend/app/models"
 	"github.com/gin-gonic/gin"
 )
 
 func GetItems(c *gin.Context){
-	reqToken := c.Request.Header.Get("Authorization")
-	if reqToken == "" {
-		c.JSON(403, gin.H{
-			"error": 1,
-			"status": "Error",
-			"message": "No Authorization",
-		})
-		return
+	ipClient := c.ClientIP()
+	//for development testing, allow localhost
+	if ipClient != "::1" && ipClient != "127.0.0.1" {
+		var cron *dto.WhitelistData
+		cron, err_w := new(models.ModelWhitelistData).CheckList(ipClient)
+		fmt.Println(err_w)
+		if cron == nil {
+			message := "IP is not allowed! "+ipClient
+			c.JSON(200, gin.H{
+				"error": 1,
+				"status":  "Error",
+				"message": message,
+			})
+			return
+		}
 	}
-
-	splitted := strings.Split(reqToken, " ")
-	if len(splitted) != 2 {
-		c.JSON(403, gin.H{
-			"error": 1,
-			"status": "Error",
-			"message": "Invalid Authorization",
-		})
-		return
-	}
-	tokenPart := splitted[1]
-
-	_, err := verifyAuth(tokenPart, c.ClientIP())
-	if err != "" {
-		c.JSON(403, gin.H{
-			"error": 1,
-			"status": "Error",
-			"message": err,
-		})
-		return
-	}
-
+	
 	//attempt request
-	cron, err_g := new(models.ModelItemsData).Select()
+	data, err_g := new(models.ModelItemsData).Select()
 	if err_g != nil {
 		c.JSON(200, gin.H{
 			"error": 1,
 			"status":  "Error",
-			"message": err,
+			"message": err_g,
 		})
 	}else{
 		c.JSON(200, gin.H{
 			"error": 0,
 			"status":  "Success",
-			"data": cron,
+			"data": data,
 		})
 	}	
 }
