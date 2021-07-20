@@ -1,7 +1,7 @@
 FROM golang:1.13.5-alpine
 
-RUN mkdir -p /go/src/template
-WORKDIR /go/src/template
+RUN mkdir -p /go/src/ecom_backend
+WORKDIR /go/src/ecom_backend
 
 ENV GO111MODULE=on
 
